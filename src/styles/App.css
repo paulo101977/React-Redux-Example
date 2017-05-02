@@ -1,0 +1,44 @@
+/* Base Application Styles */
+body{
+  overflow: hidden;
+  color: #fff;
+  background: #222;
+}
+
+.scroll-container{
+  margin-top: 150px;
+}
+
+.scrollTo{
+  height: 100vh;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.fixed{
+  position: fixed;
+    top: 0px;
+    z-index: 10;
+    background: red;
+    height: 132px;
+    width: 100%;
+}
+
+.fixed button{
+  background: transparent;
+}
+
+.child{
+  height: 150px;
+  background: #7FFFD4;
+  border: 1px solid black;
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+  align-items: center;
+  color: blue;
+  font-family: sans-serif;
+  font-size: 30px;
+  font-weight: 900;
+}
