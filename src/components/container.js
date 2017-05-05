@@ -9,13 +9,11 @@ class Container extends React.Component {
   render(){
     return (
       <div className="scroll-container">
-        {this.props.text}
+        Text: {this.props.text}
+        <br/>
+        Name: {this.props.name}
     </div>
   )}
 }
-
-
-
-
 
 module.exports = Container;

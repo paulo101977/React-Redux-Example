@@ -8,11 +8,6 @@ const changeText = (state = {}, action) => {
         text: action.text
       }
 
-    case 'CHANGE_NAME':
-        return {
-          text: action.text
-        }
-
     default:
       return state
   }

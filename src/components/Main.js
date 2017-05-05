@@ -6,7 +6,7 @@ import Container from './container';
 import Topbar from './topbar';
 
 import { connect } from 'react-redux';
-import {changeText} from '../actions';
+import {changeText , changeName} from '../actions';
 //import { bindActionCreators } from 'redux';
 //import { changeText} from '../actions';
 
@@ -19,14 +19,18 @@ class AppComponent extends React.Component {
 
   render() {
 
-    const { text , onChangeText} = this.props;
+    const { text , name , onChangeText , onChangeName} = this.props;
 
 
     return (
       <div className="">
-        <Topbar onChangeText={onChangeText}>
+        <Topbar
+          onChangeName={onChangeName}
+          onChangeText={onChangeText}>
         </Topbar>
-        <Container text={text}>
+        <Container
+          text={text}
+          name={name}>
         </Container>
       </div>
     );
@@ -34,8 +38,12 @@ class AppComponent extends React.Component {
 }
 
 function mapStateToProps(state) {
+
+  //get splitted state result and
+  //bind this to props
   return {
-    text: state.text
+    text: state.changeText.text,
+    name: state.changeName.name
   };
 }
 
@@ -44,15 +52,19 @@ function mapDispatchToProps(dispatch) {
     actions: bindActionCreators(changeText, dispatch)
   };*/
   return {
-    //bind the action to props
+    //bind the actions to props
     onChangeText: (text) => {
       dispatch(changeText(text))
+    },
+    onChangeName: (text) => {
+      dispatch(changeName(text))
     }
   }
 }
 
 AppComponent.defaultProps = {
-  text: 'Child0'
+  text: 'Child0',
+  name: ''
 };
 
 export default connect(

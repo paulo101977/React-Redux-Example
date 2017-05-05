@@ -7,19 +7,18 @@ class Topbar extends React.Component {
 
   constructor(props){
     super(props);
-
-    console.log(this.props)
   }
 
   renderChildren(){
     const children = [];
+    const {onChangeText } = this.props;
     let i;
     for(i=0; i< 10; i++) children.push('Child' + i);
     return (
       children.map((text , index)=>{
           let input = {};
           input.text = text;
-          return <button key={index} onClick={ ()=> { this.props.onChangeText(input.text)}}>
+          return <button key={index} onClick={ ()=> { onChangeText(input.text)}}>
                   {text}
                 </button>
         }
@@ -28,14 +27,17 @@ class Topbar extends React.Component {
   }
 
   render(){
+
+    const {onChangeName} = this.props;
+
     return (
         <div className="fixed">
           {this.renderChildren()}
+          <br/>
+          <input onChange={(event) => onChangeName(event.target.value)}></input>
         </div>
       )
     }
   }
-
-  //Topbar = connect()(Topbar);
 
   module.exports = Topbar;

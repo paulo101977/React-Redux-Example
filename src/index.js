@@ -2,11 +2,11 @@ import 'core-js/fn/object/assign';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/Main';
-import changeText from './reducers/changetext';
+import reduxApp from './reducers/index';
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 
-let store = createStore(changeText);
+let store = createStore(reduxApp);
 
 let render = ()=>
       <Provider store={store}>
