@@ -6,7 +6,7 @@ import Container from './container';
 import Topbar from './topbar';
 
 import { connect } from 'react-redux';
-import {changeText , changeName} from '../actions';
+import {changeText , changeName , makeRequest} from '../actions';
 //import { bindActionCreators } from 'redux';
 //import { changeText} from '../actions';
 
@@ -19,18 +19,20 @@ class AppComponent extends React.Component {
 
   render() {
 
-    const { text , name , onChangeText , onChangeName} = this.props;
+    const { text , request, name , onChangeText , onChangeName, doMakeRequest} = this.props;
 
 
     return (
       <div className="">
         <Topbar
           onChangeName={onChangeName}
-          onChangeText={onChangeText}>
+          onChangeText={onChangeText}
+          doMakeRequest={doMakeRequest}>
         </Topbar>
         <Container
           text={text}
-          name={name}>
+          name={name}
+          request={request}>
         </Container>
       </div>
     );
@@ -43,7 +45,8 @@ function mapStateToProps(state) {
   //bind this to props
   return {
     text: state.changeText.text,
-    name: state.changeName.name
+    name: state.changeName.name,
+    request: state.makeRequest.request
   };
 }
 
@@ -58,6 +61,9 @@ function mapDispatchToProps(dispatch) {
     },
     onChangeName: (text) => {
       dispatch(changeName(text))
+    },
+    doMakeRequest: (text) =>{
+      dispatch(makeRequest(text))
     }
   }
 }

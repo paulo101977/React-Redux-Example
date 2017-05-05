@@ -7,6 +7,16 @@ class Topbar extends React.Component {
 
   constructor(props){
     super(props);
+
+    this.setRequestParameter = this.setRequestParameter.bind(this);
+
+    this.state = {
+      requestText: ''
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
   }
 
   renderChildren(){
@@ -26,6 +36,15 @@ class Topbar extends React.Component {
     )
   }
 
+  setRequestParameter(text){
+
+    console.log(this.state)
+
+    this.setState({
+      requestText: text
+    })
+  }
+
   render(){
 
     const {onChangeName} = this.props;
@@ -35,6 +54,8 @@ class Topbar extends React.Component {
           {this.renderChildren()}
           <br/>
           <input onChange={(event) => onChangeName(event.target.value)}></input>
+          <input onChange={(event)=>{this.setRequestParameter(event.target.value)}}></input>
+          <button onClick={() => this.props.doMakeRequest(this.state.requestText)}>Send</button>
         </div>
       )
     }
