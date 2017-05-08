@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {Grid , Row , Col , Panel} from 'react-bootstrap';
+
 class Container extends React.Component {
 
   constructor(props){
@@ -22,7 +24,13 @@ class Container extends React.Component {
     if(!data) () => <div></div>;
 
     return data.map((item)=> {
-      return(<div>{item.name}</div>)
+      return(
+        <Col md={4}>
+          <Panel header="Repository Info:" bsStyle="default">
+            {item.name}
+          </Panel>
+        </Col>
+      )
     });
   }
 
@@ -43,16 +51,10 @@ class Container extends React.Component {
     const {data} = this.state;
 
     return (
-      <div className="scroll-container">
-        Text: {this.props.text}
-        <br/>
-        Name: {this.props.name}
-        <br/>
-        Response:
-        <br/>
-        {this.renderResponse(data)}
-    </div>
-  )}
+        <Col md={12}>
+          {this.renderResponse(data)}
+        </Col>
+      )}
 }
 
 module.exports = Container;

@@ -7,6 +7,7 @@ import Topbar from './topbar';
 
 import { connect } from 'react-redux';
 import {changeText , changeName , makeRequest} from '../actions';
+import {Grid , Row} from 'react-bootstrap';
 //import { bindActionCreators } from 'redux';
 //import { changeText} from '../actions';
 
@@ -23,18 +24,20 @@ class AppComponent extends React.Component {
 
 
     return (
-      <div className="">
-        <Topbar
-          onChangeName={onChangeName}
-          onChangeText={onChangeText}
-          doMakeRequest={doMakeRequest}>
-        </Topbar>
-        <Container
-          text={text}
-          name={name}
-          request={request}>
-        </Container>
-      </div>
+      <Grid className="">
+        <Row>
+          <Topbar
+            onChangeName={onChangeName}
+            onChangeText={onChangeText}
+            doMakeRequest={doMakeRequest}>
+          </Topbar>
+          <Container
+            text={text}
+            name={name}
+            request={request}>
+          </Container>
+        </Row>
+      </Grid>
     );
   }
 }

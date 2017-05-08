@@ -2,6 +2,7 @@ import React from 'react';
 
 //import { connect } from 'react-redux'
 //import { changeText } from '../actions'
+import {Jumbotron , Col , FormControl , FormGroup , Button , InputGroup} from 'react-bootstrap';
 
 class Topbar extends React.Component {
 
@@ -16,29 +17,13 @@ class Topbar extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
+
   }
 
-  renderChildren(){
-    const children = [];
-    const {onChangeText } = this.props;
-    let i;
-    for(i=0; i< 10; i++) children.push('Child' + i);
-    return (
-      children.map((text , index)=>{
-          let input = {};
-          input.text = text;
-          return <button key={index} onClick={ ()=> { onChangeText(input.text)}}>
-                  {text}
-                </button>
-        }
-      )
-    )
-  }
 
   setRequestParameter(text){
 
-    console.log(this.state)
+    console.log(text)
 
     this.setState({
       requestText: text
@@ -47,16 +32,26 @@ class Topbar extends React.Component {
 
   render(){
 
-    const {onChangeName} = this.props;
+    const {doMakeRequest} = this.props;
+    const {requestText} = this.state;
 
     return (
-        <div className="fixed">
-          {this.renderChildren()}
-          <br/>
-          <input onChange={(event) => onChangeName(event.target.value)}></input>
-          <input onChange={(event)=>{this.setRequestParameter(event.target.value)}}></input>
-          <button onClick={() => this.props.doMakeRequest(this.state.requestText)}>Send</button>
-        </div>
+        <Col md={12}>
+          <Jumbotron>
+            <form>
+              <FormGroup>
+                <InputGroup>
+                  <FormControl onChange={(event)=>{this.setRequestParameter(event.target.value)}}>
+                  </FormControl>
+                  <InputGroup.Button
+                    onClick={() => doMakeRequest(requestText)}>
+                      <Button bsStyle="primary">Send</Button>
+                  </InputGroup.Button>
+                </InputGroup>
+              </FormGroup>
+            </form>
+          </Jumbotron>
+        </Col>
       )
     }
   }
