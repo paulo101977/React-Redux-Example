@@ -16,15 +16,18 @@ class Topbar extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  makeRequest(){
 
+    console.log('makeRequest')
+
+    const {doMakeRequest , setIsLoading} = this.props;
+    const {requestText} = this.state;
+
+    setIsLoading(true);
+    doMakeRequest(requestText);
   }
 
-
   setRequestParameter(text){
-
-    console.log(text)
-
     this.setState({
       requestText: text
     })
@@ -32,8 +35,8 @@ class Topbar extends React.Component {
 
   render(){
 
-    const {doMakeRequest} = this.props;
-    const {requestText} = this.state;
+    //const {doMakeRequest} = this.props;
+    //const {requestText} = this.state;
 
     return (
         <Col md={12}>
@@ -44,7 +47,7 @@ class Topbar extends React.Component {
                   <FormControl onChange={(event)=>{this.setRequestParameter(event.target.value)}}>
                   </FormControl>
                   <InputGroup.Button
-                    onClick={() => doMakeRequest(requestText)}>
+                    onClick={this.makeRequest.bind(this)}>
                       <Button bsStyle="primary">Send</Button>
                   </InputGroup.Button>
                 </InputGroup>

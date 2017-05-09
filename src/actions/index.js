@@ -18,6 +18,14 @@ export const makeRequest = (text)=> {
   }
 }
 
+export const isLoading = (loading) =>{
+
+  return{
+    type: 'REQUEST_DONE',
+    loading: loading
+  }
+}
+
 export const changeText = (text) => {
   return {
     type: 'CHANGE_TEXT',

@@ -1,16 +1,18 @@
 import 'core-js/fn/object/assign';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/Main';
+import Main from './components/Main';
 import reduxApp from './reducers/index';
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+
+require('./styles/Main.scss')
 
 let store = createStore(reduxApp);
 
 let render = ()=>
       <Provider store={store}>
-        <App />
+        <Main />
       </Provider>
 
 // Render the main component into the dom

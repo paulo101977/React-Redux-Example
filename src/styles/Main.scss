@@ -1,0 +1,57 @@
+
+.thumbnail {
+  img{
+    width: 100%;
+  }
+
+  .caption{
+    height: 200px;
+
+    h3,
+    p{
+      position: relative;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+//TODO: move to component folder, inside the specific folder
+.loading-mask{
+  display: none;
+
+  &.active{
+    position: fixed;
+    background: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    //position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 100;
+    font-size: 12vw;
+    color: mediumspringgreen;
+    text-align: center;
+    vertical-align: middle;
+    align-items: center;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+
+.box-container{
+    position: relative;
+    width: 5vw;
+    height: 5vw;
+    margin-top: 5vw;
+}
+
+.box{
+    width: 100%;
+    height: 100%;
+    background: mediumspringgreen;
+    position: absolute;
+}
