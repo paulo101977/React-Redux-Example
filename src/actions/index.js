@@ -18,6 +18,14 @@ export const makeRequest = (text)=> {
   }
 }
 
+//travel to next router and pass the item to component
+export const getItem = (item)=> {
+  return{
+    type: 'GET_ITEM',
+    item: item
+  }
+}
+
 export const isLoading = (loading) =>{
 
   return{

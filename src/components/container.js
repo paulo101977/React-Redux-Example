@@ -8,6 +8,8 @@ import {Link} from 'react-router';
 
 import {isLoading} from '../actions/index';
 
+import { browserHistory } from 'react-router';
+
 class Container extends React.Component {
 
   constructor(props){
@@ -26,6 +28,10 @@ class Container extends React.Component {
       };
   }
 
+  _handleClick(event, item){
+    browserHistory.push(`/item/${item.id}`);
+  }
+
   renderResponse(data){
     if(!data) return (<div></div>);
 
@@ -39,7 +45,8 @@ class Container extends React.Component {
             <Thumbnail src={item.owner.avatar_url}>
               <h3>{item.name}</h3>
               <p>{item.description}</p>
-              <Link className="btn btn-default btn-block" to={`/item/${item.id}`}>Continuar</Link>
+              <Link onClick={(event)=>{this._handleClick(event,item)}}
+                  className="btn btn-default btn-block">Continuar</Link>
             </Thumbnail>
           </Panel>
         </Col>
@@ -57,13 +64,18 @@ class Container extends React.Component {
         if(response.statusText === 'OK'){
           this.setState({data: response.data.items})
 
-          onIsLoading(false);
+          setTimeout(()=>{
+            onIsLoading(false);
+          }, 1000)
+
         }
       })
       .catch((error)=>{
         this.setState({error: error})
 
-        onIsLoading(false);
+        setTimeout(()=>{
+          onIsLoading(false);
+        }, 1000)
       })
   }
 
