@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import {Link} from 'react-router';
 
-import {isLoading} from '../actions/index';
+import {isLoading , getItem} from '../actions/index';
 
 import { browserHistory } from 'react-router';
 
@@ -28,7 +28,17 @@ class Container extends React.Component {
       };
   }
 
-  _handleClick(event, item){
+  _handleClick(item){
+
+    console.log('clicked')
+
+    //prevent the click default
+    //event.preventDefault();
+
+    //dispatch the item to next component
+    this.props.onGetItem(item);
+
+    //push browser history (change route)
     browserHistory.push(`/item/${item.id}`);
   }
 
@@ -45,8 +55,8 @@ class Container extends React.Component {
             <Thumbnail src={item.owner.avatar_url}>
               <h3>{item.name}</h3>
               <p>{item.description}</p>
-              <Link onClick={(event)=>{this._handleClick(event,item)}}
-                  className="btn btn-default btn-block">Continuar</Link>
+              <Button onClick={()=>this._handleClick(item)}
+                  className="btn btn-default btn-block">Continuar</Button>
             </Thumbnail>
           </Panel>
         </Col>
@@ -103,6 +113,9 @@ function mapDispatchToProps(dispatch) {
   return {
     onIsLoading: (loading)=>{
       dispatch(isLoading(loading))
+    },
+    onGetItem: (item) =>{
+      dispatch(getItem(item))
     }
   }
 }

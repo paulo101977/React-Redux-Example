@@ -20,27 +20,30 @@ class Item extends React.Component {
   }*/
 
   render(){
-    const {data} = this.state;
+    const {item} = this.props;
 
     return (
         <Col md={12}>
+          <Panel header={item? `Repository: ${item.name}` : ''}>
 
+          </Panel>
         </Col>
       )}
 }
 
 function mapStateToProps(state) {
 
+  console.log('item' , state)
   //get splitted state result and
   //bind this to props
   return {
     //text: state.changeText.text,
     //name: state.changeName.name,
-    //request: state.makeRequest.request
+    item: state.getItem.item
   };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps() {
   return {
 
   }

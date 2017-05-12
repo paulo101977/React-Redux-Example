@@ -36,9 +36,6 @@ class MainContent extends React.Component {
 }
 
 function mapStateToProps(state) {
-
-  console.log('MainContent' , state)
-
   //get splitted state result and
   //bind this to props
   return {
