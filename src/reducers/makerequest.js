@@ -7,6 +7,11 @@ const makeRequest = (state = {}, action) => {
         loading: action.loading
       })
 
+    case 'MAKE_REQUEST_BY_ID':
+      return Object.assign({}, state, {
+        itemRequest: action.request
+      })
+
     case 'MAKE_REQUEST':
       return Object.assign({}, state, {
         request: action.request

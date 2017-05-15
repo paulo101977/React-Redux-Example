@@ -5,16 +5,24 @@
 import Axios from 'axios';
 
 var instance = Axios.create({
-  baseURL: 'https://api.github.com/search/',
-  timeout: 1000,
+  baseURL: 'https://api.github.com/',
+  timeout: 4000,
   method: 'get'
 });
 
-//request test with axios
+//request for repositories in github with axios
 export const makeRequest = (text)=> {
   return{
     type: 'MAKE_REQUEST',
-    request: instance('/repositories?q=topic:' + text)
+    request: instance('search/repositories?q=topic:' + text)
+  }
+}
+
+//request for repositories in github with axios
+export const getRequestById = (id)=> {
+  return{
+    type: 'MAKE_REQUEST_BY_ID',
+    request: instance('repositories/' + id)
   }
 }
 
