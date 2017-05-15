@@ -4,11 +4,13 @@ import {Thumbnail, Col , Panel, Button} from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 
-import {Link} from 'react-router';
+//import {Link} from 'react-router';
 
 import {isLoading , getItem} from '../actions/index';
 
 import { browserHistory } from 'react-router';
+
+import ErrorMessage from './ErrorMessage';
 
 class Container extends React.Component {
 
@@ -38,8 +40,11 @@ class Container extends React.Component {
     //dispatch the item to next component
     this.props.onGetItem(item);
 
+    //const url = item.html_url ? encodeURI(item.html_url) : '';
+
     //push browser history (change route)
     browserHistory.push(`/item/${item.id}`);
+    //browserHistory.push(`/item/${url}`);
   }
 
   renderResponse(data){
@@ -72,18 +77,19 @@ class Container extends React.Component {
       .request
       .then((response)=>{
         if(response.statusText === 'OK'){
-          this.setState({data: response.data.items})
-
           setTimeout(()=>{
+            this.setState({data: response.data.items})
+
+            this.setState({error: null})
+
             onIsLoading(false);
           }, 1000)
 
         }
       })
       .catch((error)=>{
-        this.setState({error: error})
-
         setTimeout(()=>{
+          this.setState({error: error})
           onIsLoading(false);
         }, 1000)
       })
@@ -91,9 +97,16 @@ class Container extends React.Component {
 
   render(){
     const {data} = this.state;
+    const {error} = this.state;
 
     return (
         <Col md={12}>
+          {
+            error ?
+                  <ErrorMessage message={error.message}/>
+                  :
+                  <div></div>
+          }
           {this.renderResponse(data)}
         </Col>
       )}

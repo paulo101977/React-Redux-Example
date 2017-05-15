@@ -5,7 +5,6 @@ import { combineReducers } from 'redux';
 import changeName from './changename';
 import changeText from './changetext';
 import makeRequest from './makerequest';
-import isLoading from './isloading';
 import getItem from './getitem';
 
 
@@ -14,7 +13,6 @@ const reduxApp = combineReducers({
   changeName,
   changeText,
   makeRequest,
-  isLoading,
   getItem
 })
 

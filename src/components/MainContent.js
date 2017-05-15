@@ -39,7 +39,7 @@ function mapStateToProps(state) {
   //get splitted state result and
   //bind this to props
   return {
-    loading: state.isLoading.loading
+    loading: state.makeRequest.loading
   };
 }
 
