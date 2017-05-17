@@ -1,16 +1,17 @@
 import React from 'react';
 
-import {Thumbnail, Col , Panel, Button} from 'react-bootstrap';
+import {Col} from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 
 //import {Link} from 'react-router';
 
-import {isLoading , getItem} from '../actions/index';
+import {isLoading} from '../actions/index';
 
-import { browserHistory } from 'react-router';
 
 import ErrorMessage from './ErrorMessage';
+
+import ContainerItem from './containeritem';
 
 class Container extends React.Component {
 
@@ -30,22 +31,6 @@ class Container extends React.Component {
       };
   }
 
-  _handleClick(item){
-
-    console.log('clicked')
-
-    //prevent the click default
-    //event.preventDefault();
-
-    //dispatch the item to next component
-    this.props.onGetItem(item);
-
-    //const url = item.html_url ? encodeURI(item.html_url) : '';
-
-    //push browser history (change route)
-    browserHistory.push(`/item/${item.id}`);
-    //browserHistory.push(`/item/${url}`);
-  }
 
   renderResponse(data){
     if(!data) return (<div></div>);
@@ -55,16 +40,7 @@ class Container extends React.Component {
       //console.log(item)
 
       return(
-        <Col key={index} sm={4} md={4}>
-          <Panel header="Repository Info:" bsStyle="default">
-            <Thumbnail src={item.owner.avatar_url}>
-              <h3>{item.name}</h3>
-              <p>{item.description}</p>
-              <Button onClick={()=>this._handleClick(item)}
-                  className="btn btn-default btn-block">Continuar</Button>
-            </Thumbnail>
-          </Panel>
-        </Col>
+        <ContainerItem key={index} item={item} />
       )
     });
   }
@@ -126,9 +102,6 @@ function mapDispatchToProps(dispatch) {
   return {
     onIsLoading: (loading)=>{
       dispatch(isLoading(loading))
-    },
-    onGetItem: (item) =>{
-      dispatch(getItem(item))
     }
   }
 }

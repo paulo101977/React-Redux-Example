@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Thumbnail, Col , Panel, Button} from 'react-bootstrap';
+import {Thumbnail, Col , Panel, Breadcrumb} from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 
@@ -72,8 +72,20 @@ class Item extends React.Component {
     }
   }
 
-  renderBreadcrumb(){
-
+  renderBreadcrumb(item){
+      return (
+        <Breadcrumb>
+          <Breadcrumb.Item href="/">
+            Home
+          </Breadcrumb.Item>
+          <Breadcrumb.Item target="_blank" href={item.owner.html_url}>
+            Author
+          </Breadcrumb.Item>
+          <Breadcrumb.Item active>
+            {item.name}
+          </Breadcrumb.Item>
+        </Breadcrumb>
+      )
   }
 
   renderResponse(data){
@@ -101,6 +113,7 @@ class Item extends React.Component {
 
     return (
         <Col md={12}>
+          {item ? this.renderBreadcrumb(item) : <div></div>}
           {
             item ?
             <Panel header={item? `Repository: ${item.name}` : ''}>
