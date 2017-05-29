@@ -32,6 +32,7 @@ class Topbar extends React.Component {
     const {requestText} = this.state;
 
 
+
     if(!requestText){
       this.setState({
         hasError: 'error',

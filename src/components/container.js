@@ -6,8 +6,6 @@ import { connect } from 'react-redux';
 
 //import {Link} from 'react-router';
 
-import {isLoading} from '../actions/index';
-
 
 import ErrorMessage from './ErrorMessage';
 
@@ -45,34 +43,9 @@ class Container extends React.Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-
-    const {onIsLoading} = this.props;
-
-    nextProps
-      .request
-      .then((response)=>{
-        if(response.statusText === 'OK'){
-          setTimeout(()=>{
-            this.setState({data: response.data.items})
-
-            this.setState({error: null})
-
-            onIsLoading(false);
-          }, 1000)
-
-        }
-      })
-      .catch((error)=>{
-        setTimeout(()=>{
-          this.setState({error: error})
-          onIsLoading(false);
-        }, 1000)
-      })
-  }
 
   render(){
-    const {data} = this.state;
+    const {data} = this.props;
     const {error} = this.state;
 
     return (
@@ -89,25 +62,33 @@ class Container extends React.Component {
 }
 
 function mapStateToProps(state) {
+
+  //console.log('container data' ,state)
+
   //get splitted state result and
   //bind this to props
   return {
     text: state.changeText.text,
     name: state.changeName.name,
-    request: state.makeRequest.request
+    request: state.makeRequest.request,
+    data: state.makeRequest.data
   };
 }
 
-function mapDispatchToProps(dispatch) {
+//function mapDispatchToProps(dispatch) {
+function mapDispatchToProps() {
+
+  //console.log()
+
   return {
-    onIsLoading: (loading)=>{
+    /*onIsLoading: (loading)=>{
       dispatch(isLoading(loading))
-    }
+    }*/
   }
 }
 
 Container.defaultProps = {
-  text: 'Child0',
+  data: [],
   name: ''
 };
 

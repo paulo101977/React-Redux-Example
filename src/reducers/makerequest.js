@@ -12,9 +12,9 @@ const makeRequest = (state = {}, action) => {
         itemRequest: action.request
       })
 
-    case 'MAKE_REQUEST':
+    case 'RECEIVE_DATA':
       return Object.assign({}, state, {
-        request: action.request
+        data: action.data
       })
 
     default:

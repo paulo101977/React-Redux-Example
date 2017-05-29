@@ -11,10 +11,25 @@ var instance = Axios.create({
 });
 
 //request for repositories in github with axios
-export const makeRequest = (text)=> {
-  return{
-    type: 'MAKE_REQUEST',
-    request: instance('search/repositories?q=topic:' + text)
+export function makeRequest(text){
+  return function(dispatch){
+    return instance('search/repositories?q=topic:' + text)
+      .then((response)=>{
+        if(response.statusText === 'OK'){
+          setTimeout(()=>{
+            dispatch(receivedata(response.data))
+            dispatch(isLoading(false));
+          }, 1000)
+
+        }
+      })
+      .catch((error)=>{
+        setTimeout(()=>{
+          //TODO: dispatch error here
+          dispatch(receiveError(error))
+          dispatch(isLoading(false))
+        }, 1000)
+      })
   }
 }
 
@@ -31,6 +46,22 @@ export const getItem = (item)=> {
   return{
     type: 'GET_ITEM',
     item: item
+  }
+}
+
+export const receivedata = (data) =>{
+
+  return{
+    type: 'RECEIVE_DATA',
+    data: data.items
+  }
+}
+
+export const receiveError = (error) =>{
+
+  return{
+    type: 'RECEIVE_ERROR',
+    error: error
   }
 }
 
