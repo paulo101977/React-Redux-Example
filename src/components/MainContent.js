@@ -6,7 +6,7 @@ import {Grid, Row} from 'react-bootstrap';
 import Topbar from './topbar';
 import LoadingMask from './loadingmask';
 
-import {changeText , changeName , makeRequest , isLoading} from '../actions';
+import {changeText , changeName , makeRequest} from '../actions';
 
 import { connect } from 'react-redux';
 
@@ -17,7 +17,7 @@ class MainContent extends React.Component {
   }
 
   render(){
-    const { loading , onChangeText , onChangeName, doMakeRequest , setIsLoading } = this.props;
+    const { loading , onChangeText , onChangeName, doMakeRequest} = this.props;
 
     return(
       <Grid>
@@ -25,7 +25,6 @@ class MainContent extends React.Component {
           <Topbar
             onChangeName={onChangeName}
             onChangeText={onChangeText}
-            setIsLoading={setIsLoading}
             doMakeRequest={doMakeRequest}/>
           {this.props.children}
           <LoadingMask loading={loading}/>
@@ -57,9 +56,6 @@ function mapDispatchToProps(dispatch) {
     },
     doMakeRequest: (text) =>{
       dispatch(makeRequest(text))
-    },
-    setIsLoading: (loading) =>{
-      dispatch(isLoading(loading))
     }
   }
 }

@@ -28,7 +28,7 @@ class Topbar extends React.Component {
 
   makeRequest(){
 
-    const {doMakeRequest , setIsLoading} = this.props;
+    const {doMakeRequest } = this.props;
     const {requestText} = this.state;
 
 
@@ -46,7 +46,7 @@ class Topbar extends React.Component {
       show: false
     })
 
-    setIsLoading(true);
+    //setIsLoading(true);
     doMakeRequest(requestText);
   }
 

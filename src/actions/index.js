@@ -12,7 +12,10 @@ var instance = Axios.create({
 
 //request for repositories in github with axios
 export function makeRequest(text){
+
   return function(dispatch){
+    dispatch(isLoading(true));
+
     return instance('search/repositories?q=topic:' + text)
       .then((response)=>{
         if(response.statusText === 'OK'){
@@ -35,7 +38,10 @@ export function makeRequest(text){
 
 //dispatch request by id
 export function makeRequestById(id){
+
   return function(dispatch){
+    dispatch(isLoading(true));
+
     return instance('/repositories/' + id)
       .then((response)=>{
         if(response.statusText === 'OK'){

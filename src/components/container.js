@@ -43,6 +43,14 @@ class Container extends React.Component {
     });
   }
 
+  renderLoadMoreButton(data){
+      if(!data) return;
+
+      if(Array.isArray(data) && data.length > 0){
+        return(<button className="btn btn-default btn-block btn-load-more">Load more</button>);
+      }
+      else return;
+  }
 
   render(){
     const {data} = this.props;
@@ -52,11 +60,12 @@ class Container extends React.Component {
         <Col md={12}>
           {
             error ?
-                  <ErrorMessage message={error.message}/>
-                  :
-                  <div></div>
+              <ErrorMessage message={error.message}/>
+              :
+              <div></div>
           }
           {this.renderResponse(data)}
+          {this.renderLoadMoreButton(data)}
         </Col>
       )}
 }
