@@ -7,9 +7,9 @@ const makeRequest = (state = {}, action) => {
         loading: action.loading
       })
 
-    case 'MAKE_REQUEST_BY_ID':
+    case 'RECEIVE_BY_ID':
       return Object.assign({}, state, {
-        itemRequest: action.request
+        itemData: action.itemData
       })
 
     case 'RECEIVE_DATA':

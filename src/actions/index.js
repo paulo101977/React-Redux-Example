@@ -33,11 +33,34 @@ export function makeRequest(text){
   }
 }
 
-//request for repositories in github with axios
-export const getRequestById = (id)=> {
+//dispatch request by id
+export function makeRequestById(id){
+  return function(dispatch){
+    return instance('/repositories/' + id)
+      .then((response)=>{
+        if(response.statusText === 'OK'){
+          setTimeout(()=>{
+            dispatch(receiveDataById(response.data))
+            dispatch(isLoading(false));
+          }, 1000)
+
+        }
+      })
+      .catch((error)=>{
+        setTimeout(()=>{
+          //TODO: dispatch error here
+          dispatch(receiveError(error))
+          dispatch(isLoading(false))
+        }, 1000)
+      })
+  }
+}
+
+//receive data for repositories in github with axios
+export const receiveDataById = (data)=> {
   return{
-    type: 'MAKE_REQUEST_BY_ID',
-    request: instance('repositories/' + id)
+    type: 'RECEIVE_BY_ID',
+    itemData: data
   }
 }
 

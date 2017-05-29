@@ -5,7 +5,7 @@ import {Thumbnail, Col , Panel, Breadcrumb} from 'react-bootstrap';
 import { connect } from 'react-redux';
 
 //actions
-import {isLoading , getItem , getRequestById} from '../actions/index';
+import {isLoading , getItem , makeRequestById} from '../actions/index';
 
 class Item extends React.Component {
 
@@ -26,49 +26,23 @@ class Item extends React.Component {
       const {id} = this.props.params;
 
       //TODO: make request for id inside the github end-point
-      this.props.onGetRequestById(id);
+      this.props.onMakeRequestById(id);
     }
 
   }
 
-  doRequest(myProps, request, property){
-
-    const {onIsLoading} = this.props;
-
-    if(!myProps[request]) return;
-
-    myProps[request]
-    .then((response)=>{
-      if(response.statusText === 'OK'){
-        setTimeout(()=>{
-          let state = {};
-          state[property] = response.data;
-          this.setState(state);
-
-
-          this.setState({error: null})
-
-          onIsLoading(false);
-        }, 1000)
-
-      }
-    })
-    .catch((error)=>{
-      setTimeout(()=>{
-        this.setState({error: error})
-        onIsLoading(false);
-      }, 1000)
-    })
-  }
 
   componentWillReceiveProps(nextProps) {
 
-    if(nextProps.request){
-      this.doRequest(nextProps , 'request' , 'data')
+
+    if(nextProps.data){
+      this.setState({data : nextProps.data})
     }
 
-    if(nextProps.itemRequest){
-      this.doRequest(nextProps , 'itemRequest' , 'itemData')
+    if(nextProps.itemData){
+      //this.doRequest(nextProps , 'itemRequest' , 'itemData')
+      //console.log()
+      this.setState({itemData: nextProps.itemData})
     }
   }
 
@@ -109,7 +83,7 @@ class Item extends React.Component {
     item = item ? item : this.state.itemData;
     let {data} = this.state;
 
-    data = data ? data.items : [];
+    data = data ? data : [];
 
     return (
         <Col md={12}>
@@ -163,7 +137,8 @@ function mapStateToProps(state) {
     //text: state.changeText.text,
     request: state.makeRequest.request, //receive a promisse
     item: state.getItem.item,
-    itemRequest: state.makeRequest.itemRequest //receive a promisse
+    data: state.makeRequest.data,
+    itemData: state.makeRequest.itemData //receive a promisse
   };
 }
 
@@ -175,8 +150,8 @@ function mapDispatchToProps(dispatch) {
     onGetItem: (item) =>{
       dispatch(getItem(item))
     },
-    onGetRequestById : (id) =>{
-      dispatch(getRequestById(id))
+    onMakeRequestById : (id) =>{
+      dispatch(makeRequestById(id))
     }
   }
 }
