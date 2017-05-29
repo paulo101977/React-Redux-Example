@@ -17,7 +17,8 @@ class MainContent extends React.Component {
   }
 
   render(){
-    const { loading , onChangeText , onChangeName, doMakeRequest} = this.props;
+    const { loading , onChangeText , onChangeName, doMakeRequest}
+      = this.props;
 
     return(
       <Grid>

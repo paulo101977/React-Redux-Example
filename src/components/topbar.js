@@ -31,8 +31,6 @@ class Topbar extends React.Component {
     const {doMakeRequest } = this.props;
     const {requestText} = this.state;
 
-
-
     if(!requestText){
       this.setState({
         hasError: 'error',
@@ -55,6 +53,7 @@ class Topbar extends React.Component {
       requestText: text
     })
   }
+
 
   render(){
 

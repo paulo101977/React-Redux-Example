@@ -20,7 +20,36 @@ export function makeRequest(text){
       .then((response)=>{
         if(response.statusText === 'OK'){
           setTimeout(()=>{
-            dispatch(receivedata(response.data))
+            dispatch(receivedata(response.data , text))
+            dispatch(isLoading(false));
+          }, 1000)
+
+        }
+      })
+      .catch((error)=>{
+        setTimeout(()=>{
+          //TODO: dispatch error here
+          dispatch(receiveError(error))
+          dispatch(isLoading(false))
+        }, 1000)
+      })
+  }
+}
+
+//request for repositories in github with axios
+export function loadMore(text,page){
+
+  let searchString = `search/repositories?q=topic:${text}&page=${page}`;
+
+
+  return function(dispatch){
+    dispatch(isLoading(true));
+
+    return instance(searchString)
+      .then((response)=>{
+        if(response.statusText === 'OK'){
+          setTimeout(()=>{
+            dispatch(receiveMoreData(response.data))
             dispatch(isLoading(false));
           }, 1000)
 
@@ -62,6 +91,13 @@ export function makeRequestById(id){
   }
 }
 
+export const receiveMoreData = (data)=> {
+  return{
+    type: 'RECEIVE_MORE_DATA',
+    data: data.items
+  }
+}
+
 //receive data for repositories in github with axios
 export const receiveDataById = (data)=> {
   return{
@@ -78,11 +114,13 @@ export const getItem = (item)=> {
   }
 }
 
-export const receivedata = (data) =>{
+export const receivedata = (data , text) =>{
 
   return{
     type: 'RECEIVE_DATA',
-    data: data.items
+    data: data.items,
+    text: text,
+    page: 1
   }
 }
 

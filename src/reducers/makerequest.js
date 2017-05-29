@@ -12,9 +12,18 @@ const makeRequest = (state = {}, action) => {
         itemData: action.itemData
       })
 
+    case 'RECEIVE_MORE_DATA':
+      return Object.assign({} , state,
+        {
+          data: state.data.concat(action.data)
+        }
+      )
+
     case 'RECEIVE_DATA':
       return Object.assign({}, state, {
-        data: action.data
+        data: action.data,
+        text: action.text,
+        page: action.page
       })
 
     default:

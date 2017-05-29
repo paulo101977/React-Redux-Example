@@ -4,6 +4,8 @@ import {Col} from 'react-bootstrap';
 
 import { connect } from 'react-redux';
 
+import {loadMore} from './../actions';
+
 //import {Link} from 'react-router';
 
 
@@ -20,6 +22,7 @@ class Container extends React.Component {
       data: []
     }
 
+    this.renderLoadMoreButton = this.renderLoadMoreButton.bind(this);
   }
 
   getInitialState() {
@@ -43,13 +46,32 @@ class Container extends React.Component {
     });
   }
 
+  loadMore(){
+
+    let { page } = this.state;
+
+    this.props.onLoadMore(this.props.toSearch , page);
+
+    this.setState({page: page + 1})
+  }
+
   renderLoadMoreButton(data){
       if(!data) return;
 
       if(Array.isArray(data) && data.length > 0){
-        return(<button className="btn btn-default btn-block btn-load-more">Load more</button>);
+        return(
+          <button onClick={this.loadMore.bind(this)}
+                  className="btn btn-default btn-block btn-load-more">Load more</button>
+          );
       }
       else return;
+  }
+
+  componentWillReceiveProps(nextProps) {
+
+    if(nextProps.toSearch != this.props.toSearch){
+      this.setState({page: 2})
+    }
   }
 
   render(){
@@ -80,19 +102,22 @@ function mapStateToProps(state) {
     text: state.changeText.text,
     name: state.changeName.name,
     request: state.makeRequest.request,
-    data: state.makeRequest.data
+    data: state.makeRequest.data,
+    toSearch: state.makeRequest.text,
+    //page: state.makeRequest.page
   };
 }
 
 //function mapDispatchToProps(dispatch) {
-function mapDispatchToProps() {
+function mapDispatchToProps(dispatch) {
 
   //console.log()
 
   return {
-    /*onIsLoading: (loading)=>{
-      dispatch(isLoading(loading))
-    }*/
+    onLoadMore: (text , page)=>{
+      dispatch(loadMore(text , page))
+    }
+
   }
 }
 
