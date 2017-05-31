@@ -16,6 +16,10 @@ import { shallow } from 'enzyme';
 import React from 'react'
 import Topbar from '../../src/components/topbar';
 
+//to test with actions/reducers
+import { connect } from 'react-redux';
+import { shallowWithStore } from 'enzyme-redux';
+
 describe('actions', ()=>{
 
   const data = {
