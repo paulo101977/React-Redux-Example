@@ -4,6 +4,9 @@
 
 import Axios from 'axios';
 
+//TODO: change any request to 'isomorphic-fetch';
+import fetch from 'isomorphic-fetch';
+
 var instance = Axios.create({
   baseURL: 'https://api.github.com/',
   timeout: 4000,
@@ -13,26 +16,24 @@ var instance = Axios.create({
 //request for repositories in github with axios
 export function makeRequest(text){
 
-  return function(dispatch){
+  return dispatch => {
     dispatch(isLoading(true));
 
-    return instance('search/repositories?q=topic:' + text)
-      .then((response)=>{
-        if(response.statusText === 'OK'){
-          setTimeout(()=>{
-            dispatch(receivedata(response.data , text))
-            dispatch(isLoading(false));
-          }, 1000)
+    return fetch(
+      'https://api.github.com/search/repositories?q=topic:' + text,
+      {method: 'GET', timeout: 4000}
+    )
+      .then(res => res.json())
+      .then(json => {
+          dispatch(receivedata(json , text))
+          dispatch(isLoading(false));
+      })
+      .catch(error => {
+        //TODO: dispatch error here
+        dispatch(receiveError(error))
+        dispatch(isLoading(false))
+      })
 
-        }
-      })
-      .catch((error)=>{
-        setTimeout(()=>{
-          //TODO: dispatch error here
-          dispatch(receiveError(error))
-          dispatch(isLoading(false))
-        }, 1000)
-      })
   }
 }
 

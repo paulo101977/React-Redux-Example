@@ -62,6 +62,8 @@ class Topbar extends React.Component {
 
     const hasError = this.state.hasError ? this.state.hasError : null;
 
+    const InputGroupButton = InputGroup.Button;
+
     return (
         <Col md={12}>
           <Jumbotron>
@@ -80,15 +82,19 @@ class Topbar extends React.Component {
                         <strong>Fill the form!</strong>
                       </Popover>
                     </Overlay>
+
+                    {/* Input */}
                     <FormControl onChange={(event)=>{this.setRequestParameter(event.target.value)}}>
                     </FormControl>
+
+                    {/* Error label */}
                     <FormControl.Feedback />
 
-
-                    <InputGroup.Button
+                    {/* Button Group*/}
+                    <InputGroupButton
                       onClick={this.makeRequest.bind(this)}>
                         <Button bsStyle="primary">Send</Button>
-                    </InputGroup.Button>
+                    </InputGroupButton>
 
                 </InputGroup>
               </FormGroup>
