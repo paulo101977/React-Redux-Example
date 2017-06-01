@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import {getItem} from '../actions/index';
 
 
-class ContainerItem extends React.Component {
+export class ContainerItem extends React.Component {
 
   constructor(props){
   	super(props);

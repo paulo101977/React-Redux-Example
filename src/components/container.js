@@ -13,7 +13,7 @@ import ErrorMessage from './ErrorMessage';
 
 import ContainerItem from './containeritem';
 
-class Container extends React.Component {
+export class Container extends React.Component {
 
   constructor(props){
     super(props);

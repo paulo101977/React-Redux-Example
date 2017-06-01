@@ -45,7 +45,7 @@ class Topbar extends React.Component {
     })
 
     //setIsLoading(true);
-    doMakeRequest(requestText);
+    return doMakeRequest(requestText);
   }
 
   setRequestParameter(text){
