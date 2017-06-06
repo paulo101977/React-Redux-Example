@@ -16,11 +16,30 @@ import { shallow } from 'enzyme';
 import React from 'react'
 import Topbar from '../../src/components/topbar';
 import { Container } from '../../src/components/container';
-import {ContainerItem} from '../../src/components/containeritem'
+import {ContainerItem} from '../../src/components/containeritem';
+import {Item} from '../../src/components/item';
 
 //to test with actions/reducers
 import { connect } from 'react-redux';
 import { shallowWithStore } from 'enzyme-redux';
+
+const getFakeData = ()=>{
+  let fakeData = [];
+
+  for(var i = 0; i < 10; i++){
+    let item = {
+      name: 'name' + i,
+      description: 'google.com',
+      owner: {
+        avatar_url: 'google.com/' + i
+      }
+    }
+
+    fakeData.push(item)
+  }
+
+  return fakeData;
+}
 
 describe('actions', ()=>{
 
@@ -65,19 +84,7 @@ describe('actionsAsync', ()=>{
   it('should test count action and result' , (done) => {
 
 
-    let items = [];
-
-    for(var i = 0; i < 10; i++){
-      let item = {
-        name: 'name' + i,
-        description: 'google.com',
-        owner: {
-          avatar_url: 'google.com/' + i
-        }
-      }
-
-      items.push(item)
-    }
+    let items = getFakeData();
 
     const fakeAction = [
       { type: 'REQUEST_DONE', loading: true },
@@ -202,23 +209,6 @@ describe('render container', ()=>{
     }
   }
 
-  const getFakeData = ()=>{
-    let fakeData = [];
-
-    for(var i = 0; i < 10; i++){
-      let item = {
-        name: 'name' + i,
-        description: 'google.com',
-        owner: {
-          avatar_url: 'google.com/' + i
-        }
-      }
-
-      fakeData.push(item)
-    }
-
-    return fakeData;
-  }
 
   it('should render container without any item' , ()=>{
 
@@ -254,28 +244,126 @@ describe('render container', ()=>{
 
     const wrapperObj = enzymeWrapper.find('Col');
 
-    const button = enzymeWrapper.find('button');
+    const buttonLoadMore = enzymeWrapper.find('button');
 
     expect(enzymeWrapper.state().page).toEqual(undefined)
 
     expect(wrapperObj.length).toEqual(1);
 
-    expect(button.length).toEqual(1);
+    //find button
+    expect(buttonLoadMore.length).toEqual(1);
 
     //simulate receive props
     enzymeWrapper.state().page = 2;
-    //enzymeWrapper.setProps({page:2});
-    //enzymeWrapper.setProps({page:2});
-    //enzymeWrapper.update();
 
-
-    button.simulate('click');
-
-    console.log(enzymeWrapper.props())
-    console.log(enzymeWrapper.state())
-
+    buttonLoadMore.simulate('click');
 
     //on click, set state to page + 1
     expect(enzymeWrapper.state().page).toEqual(3)
+  })
+})
+
+describe('test item', ()=>{
+  const setup = (item , data)=>{
+
+    const props = {
+      item: item,
+      onGetItem: actions.getItem
+    }
+
+    const store = mockStore();
+
+    const enzymeWrapper = shallowWithStore(<Item {...props}/>, store)
+
+    return{
+      props,
+      store,
+      enzymeWrapper
+    }
+  }
+
+  it('should render item', ()=>{
+      const {enzymeWrapper} = setup(
+        {
+          id: '123',
+          name: 'node',
+          description: 'Test',
+          owner : {
+            html_url: 'www.google.com'
+          }
+        }
+      );
+
+      //console.log(enzymeWrapper.find('Thumbnail').props().alt)
+      //check main content
+      expect(enzymeWrapper.find('Panel').props().header).toEqual('Repository: node')
+      expect(enzymeWrapper.find('Thumbnail').props().alt).toEqual('node')
+
+      //test render Breadcrumb
+      //console.log(enzymeWrapper.find('Breadcrumb').find('BreadcrumbItem'))
+      const Breadcrumb = enzymeWrapper.find('Breadcrumb')
+      expect(Breadcrumb.find('BreadcrumbItem').length).toEqual(3)
+      expect(Breadcrumb.find('BreadcrumbItem').find('.with-name').props().children).toEqual('node')
+  })
+
+  it('should render data', ()=>{
+    const {enzymeWrapper} = setup(
+      {
+        id: '123',
+        name: 'node',
+        description: 'Test',
+        owner : {
+          html_url: 'www.google.com'
+        }
+      }
+    );
+
+    enzymeWrapper.setState({data: []});
+
+    //set the state
+    enzymeWrapper.setState({data:getFakeData()})
+
+
+    //re-rendered 10 items
+    expect(enzymeWrapper.find('Row').find('.wrap-text').length).toEqual(10)
+  })
+
+  it('should click and render data', ()=>{
+
+    const item = {
+      id: '123',
+      name: 'node',
+      description: 'Test',
+      owner : {
+        html_url: 'www.google.com'
+      }
+    }
+
+    const {enzymeWrapper , store} = setup(item);
+
+    enzymeWrapper.setState({data: []});
+
+    //set the state
+    enzymeWrapper.setState({data:getFakeData()})
+
+    //first A inside the rendered component
+    const button = enzymeWrapper.find('Row').find('Col').first().find('button');
+
+    //test if render a(link)
+    expect(button.length).toEqual(1)
+
+    //dispatch action
+    store.dispatch(actions.getItem(item))
+
+    //click
+    try{
+      button.simulate('click')
+    }
+    catch(ex){
+      //console.error(ex);
+    }
+
+    expect(store.getActions()).toEqual([{type: 'GET_ITEM',item: item}])
+
   })
 })

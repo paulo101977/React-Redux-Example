@@ -1,13 +1,15 @@
 import React from 'react';
 
-import {Thumbnail, Col , Panel, Breadcrumb} from 'react-bootstrap';
+import {Row, Media, Thumbnail, Col , Panel, Breadcrumb} from 'react-bootstrap';
 
 import { connect } from 'react-redux';
+
+import { browserHistory } from 'react-router';
 
 //actions
 import {isLoading , getItem , makeRequestById} from '../actions/index';
 
-class Item extends React.Component {
+export class Item extends React.Component {
 
   constructor(props){
     super(props);
@@ -47,19 +49,27 @@ class Item extends React.Component {
   }
 
   renderBreadcrumb(item){
+      const BreadcrumbItem = Breadcrumb.Item;
       return (
         <Breadcrumb>
-          <Breadcrumb.Item href="/">
+          <BreadcrumbItem href="/">
             Home
-          </Breadcrumb.Item>
-          <Breadcrumb.Item target="_blank" href={item.owner.html_url}>
+          </BreadcrumbItem>
+          <BreadcrumbItem target="_blank" href={item.owner.html_url}>
             Author
-          </Breadcrumb.Item>
-          <Breadcrumb.Item active>
+          </BreadcrumbItem>
+          <BreadcrumbItem className="with-name" active>
             {item.name}
-          </Breadcrumb.Item>
+          </BreadcrumbItem>
         </Breadcrumb>
       )
+  }
+
+  _handleClick(item){
+
+    this.props.onGetItem(item);
+
+    browserHistory.push(`/item/${item.id}`);
   }
 
   renderResponse(data){
@@ -71,8 +81,20 @@ class Item extends React.Component {
 
       return(
         <Col key={index} sm={4} md={4}>
-            <a onClick={()=>this._handleClick(item)}
-                className="btn btn-default btn-block">{item.name}</a>
+          <Media>
+            <Media.Left>
+              <img width={64} height={64} src={item.owner.avatar_url}></img>
+            </Media.Left>
+            <Media.Body>
+              <p><b>Description:</b></p>
+              <p className="wrap-text">
+                {item.description}
+              </p>
+              <button onClick={()=>this._handleClick(item)}
+                  className="btn btn-default btn-block">{item.name}</button>
+            </Media.Body>
+          </Media>
+
         </Col>
       )
     });
@@ -124,7 +146,9 @@ class Item extends React.Component {
             :
             <div></div>
           }
-          {this.renderResponse(data)}
+          <Row>
+            {this.renderResponse(data)}
+          </Row>
         </Col>
       )}
 }

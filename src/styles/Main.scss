@@ -73,3 +73,17 @@
 .btn-load-more{
   margin: 20px 0px;
 }
+
+.wrap-text{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.media{
+  display: flex;
+  margin: 10px 0px;
+  padding: 10px 5px;
+  border: 1px solid #babaca;
+  border-radius: 3px;
+}
