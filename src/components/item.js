@@ -95,30 +95,30 @@ class Item extends React.Component {
                 <Thumbnail alt={item.name} src={item.owner.avatar_url} />
               </Col>
               <Col xs={12} md={6}>
-                <p>
+                <div>
                   <Col xs={4} md={3} className="without-padding-left">
                     <b>Name:</b>
                   </Col>
                   <Col xs={8} md={9} className="without-padding-left">
                     {item.name}
                   </Col>
-                </p>
-                <p>
+                </div>
+                <div>
                   <Col xs={12} md={3} className="without-padding-left">
                     <b>Description:</b>
                   </Col>
                   <Col xs={12} md={9} className="without-padding-left">
                     {item.description}
                   </Col>
-                </p>
-                <p>
+                </div>
+                <div>
                   <Col xs={4} md={3} className="without-padding-left">
                     <b>Url:</b>
                   </Col>
                   <Col xs={8} md={9} className="without-padding-left">
                     <a target="_blank" href={item.git_url}>{item.git_url}</a>
                   </Col>
-                </p>
+                </div>
               </Col>
             </Panel>
             :

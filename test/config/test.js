@@ -263,15 +263,16 @@ describe('render container', ()=>{
     expect(button.length).toEqual(1);
 
     //simulate receive props
-    //enzymeWrapper.state().page = 2;
+    enzymeWrapper.state().page = 2;
     //enzymeWrapper.setProps({page:2});
-    enzymeWrapper.setProps({page:2});
-    enzymeWrapper.update();
+    //enzymeWrapper.setProps({page:2});
+    //enzymeWrapper.update();
+
+
+    button.simulate('click');
 
     console.log(enzymeWrapper.props())
     console.log(enzymeWrapper.state())
-
-    button.simulate('click');
 
 
     //on click, set state to page + 1
